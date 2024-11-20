@@ -5,6 +5,16 @@
     Layout = "~/Views/Shared/_MainLayout.cshtml";
 }
 
+@*Html.BeginForm kullanımında 3 parametre belirtilmelidir. 1. ActionResult'ın ismi.   2.ActionResult'ın bağlı olduğu controller    3. ne zaman/ne yapıldığında/neyden sonra   çalışacağı *@
+
+@using (Html.BeginForm("Index", "Musteri", FormMethod.Get))
+{
+    <p>
+        <b>Aranacak Müşteri Adı:</b> @Html.TextBox("p")
+        <input type="submit" value="Ara"/>
+    </p>
+}
+
 <table class="table table-bordered">
     <tr>
         <th>Müşteri ID</th>
@@ -12,6 +22,7 @@
         <th>Müşteri Soyadı</th>
         <th>SİL</th>
         <th>GÜNCELLE</th>
+        <th>ALERT</th>
     </tr>
     <tbody>
         @foreach (var mus in Model)
@@ -22,6 +33,7 @@
                 <td>@mus.MUSTERISOYAD</td>
                 <td><a href="/MUSTERI/SIL/@mus.MUSTERIID" class="btn btn-danger">SİL</a></td>
                 <td><a href="/MUSTERI/MusteriGetir/@mus.MUSTERIID" class="btn btn-success">GÜNCELLE</a></td>
+                <td>@Html.ActionLink("SİL BUTONU", "SIL", new { id = mus.MUSTERIID }, new { @class = "btn btn-warning", onclick = "return confirm('Gerçekten Silmek İstiyor Musunuz?')" })</td>
             </tr>
         }
     </tbody>
